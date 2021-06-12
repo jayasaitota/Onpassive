@@ -7,6 +7,8 @@ import bodyParser from 'body-parser';
 
 import routes from './routes';
 
+import {removeBodyFields} from './utils/service.utils'
+
 const SERVER_PORT = process.env.SERVER_PORT;
 const app = express();
 
@@ -17,20 +19,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors());
 
+// remove unwanted req.body fields
+app.use(removeBodyFields);
+
 app.use('/api',routes);
 
 app.get('', (req, res) => {
   return res.send("Server is up and running")
 });
 
-// if error is not an instanceOf APIError, convert it.
-app.use((err, req, res, next) => {
-  console.log(err)
-   return res.status(500).send({
-    errorCode:500,
-    errMessage: "Some thing went wrong please try again later."
-  });
-});
 const server = app.listen(SERVER_PORT,()=>{
   console.log(`Server Started and running on port  ${SERVER_PORT}`)
 })

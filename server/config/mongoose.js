@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 // make bluebird default Promise
-Promise = require('bluebird'); 
+Promise = require('bluebird');
 
 // plugin bluebird promise in mongoose
 mongoose.Promise = Promise;
@@ -9,7 +9,7 @@ mongoose.Promise = Promise;
 
 // connect to mongo db
 const mongoUri = process.env.MONGO_URL;
-mongoose.connect(mongoUri,{ useNewUrlParser: true,useUnifiedTopology: true });
+mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 mongoose.connection.on('error', () => {
   console.log(`unable to connect to database: ${mongoUri}`);
