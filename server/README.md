@@ -12,7 +12,7 @@
 
 Following the steps below will guide you to install and run application.
 ```
-git clone 
+git clone https://github.com/jayasaitota/Onpassive.git
 cd Onpassive/server
 npm install  
 npm start  
