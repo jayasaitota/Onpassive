@@ -1,3 +1,5 @@
+import config from '../config';
+
 import Token from '../models/token.model';
 
 import { generateUUID } from '../utils/service.utils';
@@ -22,7 +24,7 @@ const setTokenVariables = (req) => {
   let token = new Token();
   const { _id, refreshToken } = req.user;
   token.accessToken = generateUUID(refreshToken);
-  token.expires = new Date().getTime() + 900000;//Update the expire time to 15 min
+  token.expires = new Date().getTime() + config.tokemExpirayTime;//Update the expire time to 15 min
   token.user = _id;
   req.token = token;
 }

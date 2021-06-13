@@ -1,5 +1,6 @@
-import { getTokenDetails } from '../services/token.service';
+import config from '../config';
 
+import { getTokenDetails } from '../services/token.service';
 import { getBearerToken } from '../utils/service.utils';
 
 
@@ -7,7 +8,7 @@ const updateExpireTime = async (token, type, req) => {
   if (type === 'removeToken') {
     token.remove();
   } else {
-    token.expires = new Date().getTime() + 900000;
+    token.expires = new Date().getTime() + config.tokemExpirayTime;
     token.updated = new Date();
     token.save();
   }

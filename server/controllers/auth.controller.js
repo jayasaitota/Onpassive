@@ -1,7 +1,10 @@
+import config from '../config';
+
 import User from '../models/user.model';
 import EmailVerification from '../models/emailVerification.model';
 
 import { removeTokenAndSaveNewToken } from '../services/token.service';
+
 
 /**
  * 
@@ -40,13 +43,13 @@ const forgotPassword = async (req, res) => {
   }
   let emailVerification = new EmailVerification();
   emailVerification.token = (new Date()).getTime().toString(36) + Math.random().toString(36).slice(2);
-  emailVerification.expires = (new Date()).getTime() + 10000;
+  emailVerification.expires = (new Date()).getTime() + config.emailExpirayTime;
   emailVerification.userId = user._id;
   emailVerification.type = 1;
   emailVerification = await emailVerification.save();
   //Email send functionality should be here
   //format http://localhost:4000/api/auth/emailValidate?token=kpurduyvso6q8124kj&type=1?
-  return res.status(200).json({sucessMessage:"Email Sent Successfully",expires:'10 Min'})
+  return res.status(200).json({sucessMessage:"Email Sent Successfully",expires:`${config.emailExpirayTimeInMin} Minutes`})
 }
 
 const validateEmailLinks = async(req,res)=>{
