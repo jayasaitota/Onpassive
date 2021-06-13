@@ -1,7 +1,5 @@
 import User from '../models/user.model';
 
-import { removeTokenAndSaveNewToken } from '../services/token.service';
-
 import { generateUUID } from '../utils/service.utils';
 
 const errorResponse = { errMessage: "Something went worng, please try again later." };
@@ -67,9 +65,9 @@ const create = async (req, res) => {
 const get = async (req, res) => {
   try {
     let user = req.user;
-    user.password =undefined
-    user.salt=undefined
-    user.refreshToken=undefined
+    user.password = undefined
+    user.salt = undefined
+    user.refreshToken = undefined
     return res.status(200).json({ details: user });
   } catch (err) {
     console.error(err)
@@ -151,36 +149,6 @@ const remove = async (req, res) => {
   }
 }
 
-
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns {message,accesstoken}
- */
-const login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findUniqueEmail(email);
-    if (!user) {
-      return res.status(400).json({ errMessage: "Please enter valid email" });
-    }
-    // compare authenticate password for user
-    if (!user || !user.authenticate(password)) {
-      return res.status(400).json({ errMessage: "Please enter valid password" });
-    }
-    req.user = user;
-    let { accessToken } = await removeTokenAndSaveNewToken(req)
-    if (!accessToken) {
-      return res.status(400).json(errorResponse)
-    }
-    return res.status(200).json({ sucessMessage: "Login Success.", accessToken: accessToken });
-  } catch (err) {
-    console.error(err)
-    return res.status(400).json(errorResponse)
-  }
-}
-
 export default {
   create,
   load,
@@ -189,5 +157,4 @@ export default {
   update,
   list,
   remove,
-  login
 }
