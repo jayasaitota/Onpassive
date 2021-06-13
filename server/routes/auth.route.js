@@ -9,9 +9,9 @@ const router = express.Router();
 router.route('/login').post(AuthCntrl.login)
 
 // POST '/api/auth/forgotPassword'
-router.route('/forgotPassword').post(AuthCntrl.forgotPassword)
+router.route('/forgotPassword').get(AuthCntrl.forgotPassword)
 
 // POST '/api/auth/emailValidate'
-router.route('/emailValidate').post(AuthCntrl.validateEmailLinks)
+router.route('/emailValidate').get(AuthCntrl.validateEmailLinks)
 
 export default router

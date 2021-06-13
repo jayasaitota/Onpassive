@@ -52,12 +52,15 @@ export const getBearerToken = (headers) => {
  * @param res Object
  * @param next Function
  */
-export const removeBodyFields = (req, res, next) =>{
+export const removeAndUpdateBodyFields = (req, res, next) =>{
   let removeFieldsArr = ['active','salt','refreshToken'];
   removeFieldsArr.forEach((field) => {
     if (req.body && (req.body[field])) {
       delete req.body[field];
     }
   });
+  if(req.body.email){
+    req.body.email = req.body.email.toLowerCase()
+  }
   next();
 };

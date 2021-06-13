@@ -34,14 +34,12 @@ const load = async (req, res, next) => {
  */
 const create = async (req, res) => {
   try {
-    const user = new User(req.body);
-
-    //Generate refresh token on user level to generate access token for authentication
-    user.refreshToken = generateUUID(`${req.body.email}:${(new Date()).getTime().toString(36)}`);
-
     if (await User.findUniqueEmail(req.body.email))
       return res.status(400).json({ errMessage: "Email already existes" })
 
+    const user = new User(req.body);
+    //Generate refresh token on user level to generate access token for authentication
+    user.refreshToken = generateUUID(`${req.body.email}:${(new Date()).getTime().toString(36)}`);
     const { statusCode, user: UserDetails } = await User.saveDetails(user);
     if (statusCode == 200) {
       return res.status(200).json({ sucessMessage: "User Create Successfully.", userId: UserDetails._id })

@@ -7,7 +7,7 @@ import bodyParser from 'body-parser';
 
 import routes from './routes';
 
-import {removeBodyFields} from './utils/service.utils'
+import {removeAndUpdateBodyFields} from './utils/service.utils'
 
 const SERVER_PORT = process.env.SERVER_PORT;
 const app = express();
@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 // remove unwanted req.body fields
-app.use(removeBodyFields);
+app.use(removeAndUpdateBodyFields);
 
 app.use('/api',routes);
 
